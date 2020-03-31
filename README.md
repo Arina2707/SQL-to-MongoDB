@@ -1,6 +1,6 @@
 # SQL-to-MongoDB
 
-Here is the project for converting SQL queries to MongoDB commannds.
+Here is the project for converting SQL queries to MongoDB commands.
 
 The structure is:
 Main class - where the user can enter the SQL SELECT query.
