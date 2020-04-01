@@ -9,6 +9,8 @@
  * @author Arina27
  */
 import java.util.List;
+import java.util.Collections;
+
 public class variant3 extends variant {
     
 
@@ -17,7 +19,11 @@ public class variant3 extends variant {
         int pos = st.indexOf("FROM");
         res.append(st.get(pos+1));
         res.append(".find({");
-        transform_where(st);
+        res.append(st.get(st.indexOf("WHERE")+1));
+        res.append(": {");        
+        check_and_where(st);
+        
+        
         transform_projection(st);
         checking_cursors(st);        
         return res;
@@ -41,29 +47,70 @@ public class variant3 extends variant {
     
     public void transform_where(List<String> s2){
         int pos1 = s2.indexOf("WHERE");
-        
-        res.append(s2.get( pos1+1));
-        res.append(": {$");
-        
+                
         if (s2.get(pos1+2).equals(">")){
-            res.append("gt: ");
+            res.append("$gt: ");
             res.append(s2.get(pos1+3));
             res.append("}}, {");
         } else if (s2.get(pos1+2).equals("<")){
-            res.append("lt: ");
+            res.append("$lt: ");
             res.append(s2.get(pos1+3));
             res.append("}}, {");   
         } else if (s2.get(pos1+2).equals("=")){
-            res.append("eq: ");
+            res.append("$eq: ");
             res.append(s2.get(pos1+3));
             res.append("}}, {");   
         }else if(s2.get(pos1+2).equals("<>")){
-            res.append("ne: ");
+            res.append("$ne: ");
             res.append(s2.get(pos1+3));
             res.append("}}, {");   
         } else{
             System.out.println("Not such operand for now!");
         }        
     }
+    
+    public void transform_where_several(List<String> s, int p){
+        
+        int pos = p;
+        
+        if (pos!=s.indexOf("WHERE")+1){
+            res.append("}, ");            
+            res.append(s.get(pos));
+            res.append(": {");
+        }
+        if (s.get(pos+1).equals(">")){
+            res.append("$gt: ");
+            res.append(s.get(pos+2));
+        } else if (s.get(pos+1).equals("<")){
+            res.append("$lt: ");
+            res.append(s.get(pos+2));   
+        } else if (s.get(pos+1).equals("=")){
+            res.append("$eq: ");
+            res.append(s.get(pos+2));  
+        }else if(s.get(pos+1).equals("<>")){
+            res.append("$ne: ");
+            res.append(s.get(pos+2)); 
+        } 
+        
+        if (pos+2==(s.size()-1)){
+            res.append("}}, {");
+        }
+    }    
+    
+    
+
+    public void check_and_where (List<String> s){
+       int occurrences = Collections.frequency(s, "AND");
+       int p = s.indexOf("WHERE")+1;
+       if (occurrences==0){
+           transform_where(s);
+       } else {
+           for (int j=0; j<(occurrences+1); j++){
+              transform_where_several(s, p); 
+              p=p+4;
+           }
+       }
+    }    
+    
     
 }

@@ -59,7 +59,10 @@ public class variant_choiceTest {
          { "SELECT * FROM customers WHERE age > 22", "db.customers.find({age: {$gt: 22}})" },
          { "SELECT name, surname, age, city FROM collection WHERE name <> Arina SKIP 2 LIMIT 7", "db.collection.find({name: {$ne: Arina}}, {name: 1, surname: 1, age: 1, city: 1}).skip(2).limit(7)" },
          { "SELECT age, city FROM collection WHERE age = 27", "db.collection.find({age: {$eq: 27}}, {age: 1, city: 1})"},
-         { "SELECT * FROM sales WHERE total < 35000", "db.sales.find({total: {$lt: 35000}})"}
+         { "SELECT * FROM sales WHERE total < 35000", "db.sales.find({total: {$lt: 35000}})"},
+         { "SELECT * FROM collection WHERE name = arina AND age > 22", "db.collection.find({name: {$eq: arina}, age: {$gt: 22}})"},
+         { "SELECT name, surname, age FROM collection WHERE age < 27 AND name = arina", "db.collection.find({age: {$lt: 27}, name: {$eq: arina}}, {name: 1, surname: 1, age: 1})"},
+         { "SELECT name, surname, age FROM collection WHERE age < 27 AND name = arina AND surname = odnoblyudova", "db.collection.find({age: {$lt: 27}, name: {$eq: arina}, surname: {$eq: odnoblyudova}}, {name: 1, surname: 1, age: 1})"}
       });
     }
 
