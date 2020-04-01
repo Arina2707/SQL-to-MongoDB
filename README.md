@@ -14,7 +14,7 @@ Also there are test classes:
 variant_choiceTest class - the test for the variant_choice class.
 TestRunner class - to run our test with several arguments.
 
-1. If you want to test the program, you can run TestRunner.java and there you'll find the result of the successful completion.
+1. If you want to test the program, you can run TestRunner.java and there you'll find the result of the successful completion (firstly, please, do that).
 2. If you want to enter the SQL query yourself, you have to run the Main class and enter the query (!please, enter it correctly, with all the spaces needed and capital letters of the key words).
 
 NOTE:
