@@ -19,4 +19,5 @@ TestRunner class - to run our test with several arguments.
 
 NOTE:
 For now the project supports only SELECT queries.
-For specifying equality condition I am using { <field>: { $eq: <value> } }, it's the same as { field: <value> }.
+For specifying equality condition I am using: 
+{ <field>: { $eq: <value> } }, it's the same as { field: <value> }.
